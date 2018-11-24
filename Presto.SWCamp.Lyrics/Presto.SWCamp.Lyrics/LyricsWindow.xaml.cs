@@ -22,7 +22,6 @@ namespace Presto.SWCamp.Lyrics
     public partial class LyricsWindow : Window
     {
         LyricsParser lyricsParser;
-        int curLyricIndex = -2;
         bool choiceMusic = false;
 
         public LyricsWindow()
@@ -48,7 +47,6 @@ namespace Presto.SWCamp.Lyrics
             var musicFilePath = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             lyricsParser.musicFilePath = musicFilePath;
             lyricsParser.parsingLyrics();
-            curLyricIndex = -1;
             textLyrics.Text = "가사 창";
             choiceMusic = true;
             //throw new NotImplementedException();
