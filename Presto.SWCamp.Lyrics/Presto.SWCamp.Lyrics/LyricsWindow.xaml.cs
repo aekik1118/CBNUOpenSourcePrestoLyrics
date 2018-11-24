@@ -22,14 +22,12 @@ namespace Presto.SWCamp.Lyrics
     public partial class LyricsWindow : Window
     {
         LyricsParser lyricsParser;
-        bool choiceMusic = false;
+        bool choiceMusic = false; //음악 선택시 true
 
         public LyricsWindow()
         {
             InitializeComponent();
             lyricsParser = new LyricsParser();
-
-            
 
             var timer = new DispatcherTimer
 			{
@@ -46,26 +44,25 @@ namespace Presto.SWCamp.Lyrics
         {        
             var musicFilePath = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             lyricsParser.musicFilePath = musicFilePath;
-            lyricsParser.parsingLyrics();
-            textLyrics.Text = "가사 창";
+            lyricsParser.parsingLyrics(); // 노래의 가사를 파싱
+            textLyrics.Text = "가사 창"; // 가사창 초기화
             choiceMusic = true;
             //throw new NotImplementedException();
+            
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             if(choiceMusic)
             {
-                if(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position) >= 0)
-                {
-                    textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));
-                }                                   
+                if (lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position) >= 0)
+                    textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));                                                 
             }
             else
             {
+                //음악이 선택되지 않았을때 디폴트 가사창
                 textLyrics.Text = "가사 창";
             }
         }
-        //PrestoSDK.PrestoService.Player.Position
     }
 }
