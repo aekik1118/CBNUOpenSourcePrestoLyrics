@@ -49,6 +49,7 @@ namespace Presto.SWCamp.Lyrics
             lyricsParser.musicFilePath = musicFilePath;
             lyricsParser.parsingLyrics();
             curLyricIndex = -1;
+            textLyrics.Text = "가사 창";
             choiceMusic = true;
             //throw new NotImplementedException();
         }
@@ -60,15 +61,7 @@ namespace Presto.SWCamp.Lyrics
                 if(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position) >= 0)
                 {
                     textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));
-                }
-                        
-                /*
-               if (lyricsParser.IsChangeLyric(curLyricIndex, PrestoSDK.PrestoService.Player.Position))
-               {
-                   curLyricIndex++;
-                   textLyrics.Text = lyricsParser.LyricsAt(curLyricIndex);
-               }
-               */
+                }                                   
             }
             else
             {
