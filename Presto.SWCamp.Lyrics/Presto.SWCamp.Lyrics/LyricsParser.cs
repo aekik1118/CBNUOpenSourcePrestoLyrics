@@ -8,16 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+//가사 정보를 파싱 하는 class
 namespace Presto.SWCamp.Lyrics
 {
     public class LyricsParser
     {
-        List<string> lyrics = new List<string>();
-        List<double> lyricsMsTimes = new List<double>();
+        List<string> lyrics = new List<string>(); // 가사 정보 리스트
+        List<double> lyricsMsTimes = new List<double>(); // 가사의 시간 정보 리스트
         bool havingLyricPart = false;
 
-        public string musicFilePath { get; set; }
-        public string lyricFilePath { get; set; }
+        public string musicFilePath { get; set; } // 음악 파일 경로
+        public string lyricFilePath { get; set; } // 자막 파일 경로
 
         public void parsingLyrics()
         {
@@ -36,12 +37,12 @@ namespace Presto.SWCamp.Lyrics
                 lyricsMsTimes.Add(time.TotalMilliseconds);
 
                 //가사 부분 파싱
-                if (splitData.Length > 2)
+                if (splitData.Length > 2)//2이상인 경우 파트에 대한 정보가 저장되있다 가정
                 {
                     if (!havingLyricPart)
                         havingLyricPart = true;
 
-                    partOwner = splitData[1] + "]";
+                    partOwner = splitData[1] + "]"; //파트 주인 정보 저장
                     lyrics.Add(partOwner + splitData[2]);
                 }
                 else
@@ -54,6 +55,7 @@ namespace Presto.SWCamp.Lyrics
             }
         }
 
+        //입력된 msTime에 가장 가까운 가사 index값 반환
         public int CloseLyricsIndex(double msTime)
         {
             int left = 0, right = lyricsMsTimes.Count-1;
@@ -89,23 +91,13 @@ namespace Presto.SWCamp.Lyrics
             return index;
         }
 
-        //public int CloseLyricsIndex(double msTime)
-        //{
-        //    int i = 0;
-        //    while (lyricsMsTimes[i] < msTime)
-        //    {
-        //        i++;
-        //        if (i == lyricsMsTimes.Count)
-        //            break;
-        //    }
-        //    return i - 1;
-        //}
-
+        //index번째 가사 반환
         public string LyricsAt(int index)
         {
             return lyrics[index];
         }
 
+        //가사 파일 검색
         private string FindLyricFilePath()
         {
             return musicFilePath.Substring(0, musicFilePath.Length - 4) + ".lrc";
