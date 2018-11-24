@@ -23,6 +23,7 @@ namespace Presto.SWCamp.Lyrics
     {
         LyricsParser lyricsParser;
         int curLyricIndex = -2;
+        bool choiceMusic = false;
 
         public LyricsWindow()
         {
@@ -48,19 +49,31 @@ namespace Presto.SWCamp.Lyrics
             lyricsParser.musicFilePath = musicFilePath;
             lyricsParser.parsingLyrics();
             curLyricIndex = -1;
+            choiceMusic = true;
             //throw new NotImplementedException();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if(curLyricIndex != -2)
+            if(choiceMusic)
             {
-                if (lyricsParser.IsChangeLyric(curLyricIndex, PrestoSDK.PrestoService.Player.Position))
+                if(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position) >= 0)
                 {
-                    curLyricIndex++;
-                    textLyrics.Text = lyricsParser.LyricsAt(curLyricIndex);
+                    textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));
                 }
-            }      
+                        
+                /*
+               if (lyricsParser.IsChangeLyric(curLyricIndex, PrestoSDK.PrestoService.Player.Position))
+               {
+                   curLyricIndex++;
+                   textLyrics.Text = lyricsParser.LyricsAt(curLyricIndex);
+               }
+               */
+            }
+            else
+            {
+                textLyrics.Text = "가사 창";
+            }
         }
         //PrestoSDK.PrestoService.Player.Position
     }

@@ -16,17 +16,15 @@ namespace Presto.SWCamp.Lyrics
         List<double> lyricsMsTimes = new List<double>();
 
         public string musicFilePath { get; set; }
-        public string lyricFilePath { get; set; }
-
-        public List<double> GetLyricsMsTimes()
-        {
-            return lyricsMsTimes;
-        }
+        public string lyricFilePath { get; set; }       
 
         public void parsingLyrics()
         {
             lyricFilePath = FindLyricFilePath();
             string[] lines = File.ReadAllLines(lyricFilePath);
+
+            lyrics.Clear();
+            lyricsMsTimes.Clear();
 
             for (int i=3; i< lines.Length; i++)
             {
@@ -36,6 +34,16 @@ namespace Presto.SWCamp.Lyrics
                lyrics.Add(splitData[1]);         
                lyricsMsTimes.Add(time.TotalMilliseconds);       
             }     
+        }
+
+        public int CloseLyricsIndex(double msTime)
+        {
+            int i = 0;
+            while(lyricsMsTimes[i + 1] < msTime)
+            {
+                i++;
+            }
+            return i--;
         }
 
         public bool IsChangeLyric(int index, double msTime)
