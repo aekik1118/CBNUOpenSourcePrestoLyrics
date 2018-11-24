@@ -30,9 +30,16 @@ namespace Presto.SWCamp.Lyrics
             {
                //시간 부분 파싱
                var splitData = lines[i].Split(']');
-               var time = TimeSpan.ParseExact(splitData[0].Substring(1), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
-               lyrics.Add(splitData[1]);         
-               lyricsMsTimes.Add(time.TotalMilliseconds);       
+               var time = TimeSpan.ParseExact(splitData[0].Substring(1), @"mm\:ss\.ff", CultureInfo.InvariantCulture);         
+               lyricsMsTimes.Add(time.TotalMilliseconds);
+
+                //가사 부분 파싱
+
+                if(splitData.Length == 3)             
+                    lyrics.Add(splitData[2]);                
+                else
+                    lyrics.Add(splitData[1]);
+                           
             }     
         }
 
@@ -46,11 +53,6 @@ namespace Presto.SWCamp.Lyrics
                     break;
             }
             return i-1;
-        }
-
-        public bool IsChangeLyric(int index, double msTime)
-        {
-            return lyricsMsTimes[index + 1] < msTime;
         }
 
         public string LyricsAt(int index)
