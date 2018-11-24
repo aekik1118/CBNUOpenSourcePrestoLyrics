@@ -13,7 +13,7 @@ namespace Presto.SWCamp.Lyrics
 {
     public class LyricsParser
     {
-        List<string> lyrics = new List<string>(); // 가사 정보 리스트
+        List<List<string>> lyrics = new List<List<string>>(); // 가사 정보 리스트
         List<double> lyricsMsTimes = new List<double>(); // 가사의 시간 정보 리스트
         bool havingLyricPart = false;
 
@@ -37,20 +37,23 @@ namespace Presto.SWCamp.Lyrics
                 lyricsMsTimes.Add(time.TotalMilliseconds);
 
                 //가사 부분 파싱
+
+                lyrics.Add(new List<string> { });
+
                 if (splitData.Length > 2)//2이상인 경우 파트에 대한 정보가 저장되있다 가정
                 {
                     if (!havingLyricPart)
                         havingLyricPart = true;
 
                     partOwner = splitData[1] + "]"; //파트 주인 정보 저장
-                    lyrics.Add(partOwner + splitData[2]);
+                    lyrics[0].Add(partOwner + splitData[2]);
                 }
                 else
                 {
                     if(havingLyricPart)
-                        lyrics.Add(partOwner + splitData[1]);                    
+                        lyrics[0].Add(partOwner + splitData[1]);                    
                     else
-                        lyrics.Add(splitData[1]);
+                        lyrics[0].Add(splitData[1]);
                 }           
             }
         }
@@ -100,7 +103,7 @@ namespace Presto.SWCamp.Lyrics
         //index번째 가사 반환
         public string LyricsAt(int index)
         {
-            return lyrics[index];
+            return lyrics[0][index];
         }
 
         //가사 파일 검색
