@@ -20,6 +20,6 @@ namespace Presto.SWCamp.Lyrics
         public override void OnUnload()
         {
             _lyrics.Close();
-        }
+        }     
     }
 }

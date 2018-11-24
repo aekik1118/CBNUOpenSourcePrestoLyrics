@@ -22,6 +22,9 @@ namespace Presto.SWCamp.Lyrics
         public LyricsWindow()
         {
             InitializeComponent();
+
+            LyricsParser lyricsParser = new LyricsParser("aa");
+            //lyricsParser.parsingLyrics();
         }
     }
 }
