@@ -1,4 +1,5 @@
-﻿<Window
+﻿<Window 
+    
     x:Class="Presto.SWCamp.Lyrics.LyricsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,16 +11,29 @@
     Height="400"
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
     mc:Ignorable="d">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="#FF1EC597" Offset="1"/>
+            <GradientStop Color="#FFEDEDED"/>
+            <GradientStop Color="#FFA3ACBB" Offset="0.003"/>
+            <GradientStop Color="#FF252525"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Effect>
+        <DropShadowEffect Color="#FFC6C4CB" BlurRadius="50"/>
+    </Window.Effect>
 
     <StackPanel VerticalAlignment="Center">
+
         <TextBlock
             FontSize="14"
             Text="{Binding Player.CurrentMusic.Title}"
-            TextAlignment="Center" />
+            TextAlignment="Center" FontFamily="NanumGothic" FontWeight="Bold" Foreground="White" />
 
         <TextBlock
             FontSize="24" x:Name="textLyrics"
             Text="가사가 여기에 표시됩니다."
-            TextAlignment="Center" />
+            TextAlignment="Center" FontFamily="NanumGothic" TextDecorations="{x:Null}" TextOptions.TextFormattingMode="Display" TextOptions.TextHintingMode="Animated" FontWeight="Bold" Foreground="White" />
+
     </StackPanel>
 </Window>
