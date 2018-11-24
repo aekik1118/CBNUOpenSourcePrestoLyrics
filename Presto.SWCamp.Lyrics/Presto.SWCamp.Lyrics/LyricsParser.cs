@@ -14,33 +14,44 @@ namespace Presto.SWCamp.Lyrics
     {
         List<string> lyrics = new List<string>();
         List<double> lyricsMsTimes = new List<double>();
+        bool havingLyricPart = false;
 
         public string musicFilePath { get; set; }
-        public string lyricFilePath { get; set; }       
+        public string lyricFilePath { get; set; }
 
         public void parsingLyrics()
         {
             lyricFilePath = FindLyricFilePath();
             string[] lines = File.ReadAllLines(lyricFilePath);
+            string partOwner = null;
 
             lyrics.Clear();
             lyricsMsTimes.Clear();
 
-            for (int i=3; i< lines.Length; i++)
+            for (int i = 3; i < lines.Length; i++)
             {
-               //시간 부분 파싱
-               var splitData = lines[i].Split(']');
-               var time = TimeSpan.ParseExact(splitData[0].Substring(1), @"mm\:ss\.ff", CultureInfo.InvariantCulture);         
-               lyricsMsTimes.Add(time.TotalMilliseconds);
+                //시간 부분 파싱
+                var splitData = lines[i].Split(']');
+                var time = TimeSpan.ParseExact(splitData[0].Substring(1), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
+                lyricsMsTimes.Add(time.TotalMilliseconds);
 
                 //가사 부분 파싱
+                if (splitData.Length > 2)
+                {
+                    if (!havingLyricPart)
+                        havingLyricPart = true;
 
-                if(splitData.Length == 3)             
-                    lyrics.Add(splitData[2]);                
+                    partOwner = splitData[1] + "]";
+                    lyrics.Add(partOwner + splitData[2]);
+                }
                 else
-                    lyrics.Add(splitData[1]);
-                           
-            }     
+                {
+                    if(havingLyricPart)
+                        lyrics.Add(partOwner + splitData[1]);                    
+                    else
+                        lyrics.Add(splitData[1]);
+                }           
+            }
         }
 
         public int CloseLyricsIndex(double msTime)
