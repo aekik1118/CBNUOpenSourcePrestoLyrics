@@ -45,7 +45,7 @@ namespace Presto.SWCamp.Lyrics
                     if (!havingLyricPart)
                         havingLyricPart = true;
 
-                    partOwner = splitData[1] + "]"; //파트 주인 정보 저장
+                    partOwner = splitData[1] + "] "; //파트 주인 정보 저장
                     lyrics[0].Add(partOwner + splitData[2]);
                 }
                 else
@@ -74,7 +74,7 @@ namespace Presto.SWCamp.Lyrics
             {
                 index = (left + right) / 2;
 
-                if (lyricsMsTimes[index] < msTime)
+                if (lyricsMsTimes[index] <= msTime)
                 {
                     if (lyricsMsTimes[index + 1] > msTime)
                     {
@@ -87,17 +87,18 @@ namespace Presto.SWCamp.Lyrics
                 }
                 else
                 {
-                    if (lyricsMsTimes[index - 1] < msTime)
+                    if (lyricsMsTimes[index - 1] <= msTime)
                     {
                         return index - 1;
                     }
                     else
                     {
-                        right = index;
+                        right = index - 1;
                     }
                 }
             }
-            return index;
+
+            return left;
         }
 
         //index번째 가사 반환
