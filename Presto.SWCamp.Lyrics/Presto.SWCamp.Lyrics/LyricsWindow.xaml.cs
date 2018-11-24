@@ -55,8 +55,12 @@ namespace Presto.SWCamp.Lyrics
         {
             if(choiceMusic)
             {
-                if (lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position) >= 0)
-                    textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));                                                 
+                int index = lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position);
+
+                if (index >= 0)
+                    textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));
+                else
+                    textLyrics.Text = "가사 창";
             }
             else
             {

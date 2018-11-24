@@ -65,7 +65,7 @@ namespace Presto.SWCamp.Lyrics
             int index = (left+right) / 2;
 
             if (msTime < lyricsMsTimes[0])//시작 가사 예외처리
-                return 0;
+                return -1;
 
             if (msTime > lyricsMsTimes[lyricsMsTimes.Count - 1])//마지막 가사 예외처리
                 return lyricsMsTimes.Count - 1;
