@@ -12,7 +12,7 @@ namespace Presto.SWCamp.Lyrics
     public class LyricsParser
     {
         List<string> lyrics = new List<string>();
-        List<string> lyricsTimes = new List<string>();
+        List<double> lyricsMsTimes = new List<double>();
         string title;
 
         public LyricsParser(string title)
@@ -24,15 +24,17 @@ namespace Presto.SWCamp.Lyrics
         {
             string[] lines = File.ReadAllLines(@"C:\Users\\cbnu\Documents\Presto.Lyrics.Sample\Musics\볼빨간사춘기 - 여행.lrc");
 
-            for (int i=3; i<=lines.Length; i++)
+            for (int i=3; i< lines.Length; i++)
             {
                //시간 부분 파싱
-               //var splitData = lines[i].Split(']');
-               // var time = TimeSpan.ParseExact("00:04:98", @"mm\:ss\.ff", CultureInfo.InvariantCulture);
+               var splitData = lines[i].Split(']');
+               var time = TimeSpan.ParseExact(splitData[0].Substring(1), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
 
-               // MessageBox.Show(time.TotalMilliseconds.ToString());
+               lyricsMsTimes.Add(time.TotalMilliseconds);       
             }
-      
+
+           
+
         }
     }
 }
