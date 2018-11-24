@@ -18,7 +18,7 @@
             TextAlignment="Center" />
 
         <TextBlock
-            FontSize="24"
+            FontSize="24" x:Name="textLyrics"
             Text="가사가 여기에 표시됩니다."
             TextAlignment="Center" />
     </StackPanel>
