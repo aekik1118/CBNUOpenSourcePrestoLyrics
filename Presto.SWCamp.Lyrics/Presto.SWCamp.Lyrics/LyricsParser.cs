@@ -14,18 +14,17 @@ namespace Presto.SWCamp.Lyrics
     {
         List<string> lyrics = new List<string>();
         List<double> lyricsMsTimes = new List<double>();
-        string title;
 
-        public LyricsParser(string title)
-        {
-            this.title = title;
-        }
+        public string musicFilePath { get; set; }
+        public string lyricFilePath { get; set; }
 
         public void parsingLyrics()
         {
-            string[] lines = File.ReadAllLines(@"C:\Users\\cbnu\Documents\Presto.Lyrics.Sample\Musics\"+title+@".lrc");
+            lyricFilePath = FindLyricFilePath();
+            MessageBox.Show(lyricFilePath);
+            string[] lines = File.ReadAllLines(lyricFilePath);
 
-            for (int i=3; i< lines.Length; i++)
+            for (int i=3; i< 5; i++)// lines.Length
             {
                //시간 부분 파싱
                var splitData = lines[i].Split(']');
@@ -34,11 +33,12 @@ namespace Presto.SWCamp.Lyrics
                 MessageBox.Show(splitData[1]);
                lyricsMsTimes.Add(time.TotalMilliseconds);       
             }
+         
+        }
 
-
-
-           
-
+        private string FindLyricFilePath()
+        {
+            return musicFilePath.Substring(0, musicFilePath.Length - 4) + ".lrc";
         }
     }
 }

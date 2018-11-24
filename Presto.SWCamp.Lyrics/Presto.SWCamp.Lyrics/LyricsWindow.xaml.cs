@@ -21,28 +21,29 @@ namespace Presto.SWCamp.Lyrics
     /// </summary>
     public partial class LyricsWindow : Window
     {
+        LyricsParser lyricsParser;
+
         public LyricsWindow()
         {
             InitializeComponent();
+            lyricsParser = new LyricsParser();
 
-            //  LyricsParser lyricsParser = new LyricsParser("aa");
-            //  lyricsParser.parsingLyrics();
-            
+            PrestoSDK.PrestoService.Player.StreamChanged += Player_StreamChanged;
+
             var timer = new DispatcherTimer
 			{
 				Interval = TimeSpan.FromMilliseconds(100)
 			};
-
-            PrestoSDK.PrestoService.Player.StreamChanged += Player_StreamChanged;
-
+            
             timer.Tick += Timer_Tick;
 			timer.Start();
 		}
 
         private void Player_StreamChanged(object sender, Common.StreamChangedEventArgs e)
-        {
-            var Title = PrestoSDK.PrestoService.Player.CurrentMusic.Title;
-            MessageBox.Show(Title);
+        {        
+            var musicFilePath = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
+            lyricsParser.musicFilePath = musicFilePath;
+            lyricsParser.parsingLyrics();
             //throw new NotImplementedException();
         }
 
