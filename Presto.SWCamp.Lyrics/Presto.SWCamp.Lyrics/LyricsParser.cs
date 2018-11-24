@@ -56,15 +56,50 @@ namespace Presto.SWCamp.Lyrics
 
         public int CloseLyricsIndex(double msTime)
         {
-            int i = 0;
-            while(lyricsMsTimes[i] < msTime)
+            int left = 0, right = lyricsMsTimes.Count-1;
+            int index = (left+right) / 2;
+
+            while(left < right)
             {
-                i++;
-                if (i == lyricsMsTimes.Count)
-                    break;
+                index = (left + right) / 2;
+
+                if (lyricsMsTimes[index] < msTime)
+                {
+                    if (lyricsMsTimes[index + 1] > msTime)
+                    {
+                        return index;
+                    }
+                    else
+                    {
+                        left = index;
+                    }
+                }
+                else
+                {
+                    if (lyricsMsTimes[index + 1] < msTime)
+                    {
+                        return index;
+                    }
+                    else
+                    {
+                        right = index;
+                    }
+                }
             }
-            return i-1;
+            return index;
         }
+
+        //public int CloseLyricsIndex(double msTime)
+        //{
+        //    int i = 0;
+        //    while (lyricsMsTimes[i] < msTime)
+        //    {
+        //        i++;
+        //        if (i == lyricsMsTimes.Count)
+        //            break;
+        //    }
+        //    return i - 1;
+        //}
 
         public string LyricsAt(int index)
         {
