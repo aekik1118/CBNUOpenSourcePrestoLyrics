@@ -12,18 +12,13 @@
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
     mc:Ignorable="d">
     <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-            <GradientStop Color="#FF1EC597" Offset="1"/>
-            <GradientStop Color="#FFEDEDED"/>
-            <GradientStop Color="#FFA3ACBB" Offset="0.003"/>
-            <GradientStop Color="#FF252525"/>
-        </LinearGradientBrush>
+        <ImageBrush ImageSource="images/equalizer.jpg"/>
     </Window.Background>
     <Window.Effect>
         <DropShadowEffect Color="#FFC6C4CB" BlurRadius="50"/>
     </Window.Effect>
 
-    <StackPanel VerticalAlignment="Center">
+    <StackPanel VerticalAlignment="Center" OpacityMask="Black">
 
         <TextBlock
             FontSize="14"
@@ -31,9 +26,14 @@
             TextAlignment="Center" FontFamily="NanumGothic" FontWeight="Bold" Foreground="White" />
 
         <TextBlock
+            SnapsToDevicePixels="True"
             FontSize="24" x:Name="textLyrics"
             Text="가사가 여기에 표시됩니다."
-            TextAlignment="Center" FontFamily="NanumGothic" TextDecorations="{x:Null}" TextOptions.TextFormattingMode="Display" TextOptions.TextHintingMode="Animated" FontWeight="Bold" Foreground="White" />
+            TextAlignment="Center" FontFamily="Malgun Gothic" TextDecorations="{x:Null}" TextOptions.TextFormattingMode="Display" Foreground="White" TextOptions.TextHintingMode="Fixed" FontWeight="Bold" RenderTransformOrigin="0.1,0.5" >
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="2" Direction="270" BlurRadius="7"/>
+            </TextBlock.Effect>
+        </TextBlock>
 
     </StackPanel>
 </Window>

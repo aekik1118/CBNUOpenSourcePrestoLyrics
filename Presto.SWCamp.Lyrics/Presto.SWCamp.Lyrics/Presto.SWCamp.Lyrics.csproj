@@ -92,6 +92,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\equalizer.jpg" />
+  </ItemGroup>
   <PropertyGroup>
     <StartAction>Program</StartAction>
     <StartProgram>$(Presto)\Presto.exe</StartProgram>
