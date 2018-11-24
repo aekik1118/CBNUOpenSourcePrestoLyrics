@@ -24,8 +24,6 @@ namespace Presto.SWCamp.Lyrics
         {
             string[] lines = File.ReadAllLines(@"C:\Users\\cbnu\Documents\Presto.Lyrics.Sample\Musics\볼빨간사춘기 - 여행.lrc");
 
-            MessageBox.Show(lines[0]);
-
             for (int i=3; i<=lines.Length; i++)
             {
                //시간 부분 파싱
