@@ -25,22 +25,30 @@ namespace Presto.SWCamp.Lyrics
         {
             InitializeComponent();
 
-            LyricsParser lyricsParser = new LyricsParser("aa");
-            lyricsParser.parsingLyrics();
-
-			var timer = new DispatcherTimer
+            //  LyricsParser lyricsParser = new LyricsParser("aa");
+            //  lyricsParser.parsingLyrics();
+            
+            var timer = new DispatcherTimer
 			{
 				Interval = TimeSpan.FromMilliseconds(100)
-
 			};
 
-			timer.Tick += Timer_Tick;
+            PrestoSDK.PrestoService.Player.StreamChanged += Player_StreamChanged;
+
+            timer.Tick += Timer_Tick;
 			timer.Start();
 		}
 
-		private void Timer_Tick(object sender, EventArgs e)
+        private void Player_StreamChanged(object sender, Common.StreamChangedEventArgs e)
+        {
+            var Title = PrestoSDK.PrestoService.Player.CurrentMusic.Title;
+            MessageBox.Show(Title);
+            //throw new NotImplementedException();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
 		{
 			textLyrics.Text = PrestoSDK.PrestoService.Player.Position.ToString();
-		}
-	}
+        }
+    }
 }
