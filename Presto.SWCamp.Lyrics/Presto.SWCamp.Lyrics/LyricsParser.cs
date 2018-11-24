@@ -61,7 +61,13 @@ namespace Presto.SWCamp.Lyrics
             int left = 0, right = lyricsMsTimes.Count-1;
             int index = (left+right) / 2;
 
-            while(left < right)
+            if (msTime < lyricsMsTimes[0])//시작 가사 예외처리
+                return 0;
+
+            if (msTime > lyricsMsTimes[lyricsMsTimes.Count - 1])//마지막 가사 예외처리
+                return lyricsMsTimes.Count - 1;
+
+            while (left < right)
             {
                 index = (left + right) / 2;
 
@@ -73,14 +79,14 @@ namespace Presto.SWCamp.Lyrics
                     }
                     else
                     {
-                        left = index;
+                        left = index+1;
                     }
                 }
                 else
                 {
-                    if (lyricsMsTimes[index + 1] < msTime)
+                    if (lyricsMsTimes[index - 1] < msTime)
                     {
-                        return index;
+                        return index - 1;
                     }
                     else
                     {
