@@ -18,22 +18,34 @@ namespace Presto.SWCamp.Lyrics
         public string musicFilePath { get; set; }
         public string lyricFilePath { get; set; }
 
+        public List<double> GetLyricsMsTimes()
+        {
+            return lyricsMsTimes;
+        }
+
         public void parsingLyrics()
         {
             lyricFilePath = FindLyricFilePath();
-            MessageBox.Show(lyricFilePath);
             string[] lines = File.ReadAllLines(lyricFilePath);
 
-            for (int i=3; i< 5; i++)// lines.Length
+            for (int i=3; i< lines.Length; i++)
             {
                //시간 부분 파싱
                var splitData = lines[i].Split(']');
                var time = TimeSpan.ParseExact(splitData[0].Substring(1), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
-               lyrics.Add(splitData[1]);
-                MessageBox.Show(splitData[1]);
+               lyrics.Add(splitData[1]);         
                lyricsMsTimes.Add(time.TotalMilliseconds);       
-            }
-         
+            }     
+        }
+
+        public bool IsChangeLyric(int index, double msTime)
+        {
+            return lyricsMsTimes[index + 1] < msTime;
+        }
+
+        public string LyricsAt(int index)
+        {
+            return lyrics[index];
         }
 
         private string FindLyricFilePath()

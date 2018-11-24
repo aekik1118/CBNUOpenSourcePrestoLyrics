@@ -22,19 +22,22 @@ namespace Presto.SWCamp.Lyrics
     public partial class LyricsWindow : Window
     {
         LyricsParser lyricsParser;
+        int curLyricIndex = -2;
 
         public LyricsWindow()
         {
             InitializeComponent();
             lyricsParser = new LyricsParser();
 
-            PrestoSDK.PrestoService.Player.StreamChanged += Player_StreamChanged;
+            
 
             var timer = new DispatcherTimer
 			{
 				Interval = TimeSpan.FromMilliseconds(100)
 			};
-            
+
+            PrestoSDK.PrestoService.Player.StreamChanged += Player_StreamChanged;
+
             timer.Tick += Timer_Tick;
 			timer.Start();
 		}
@@ -44,12 +47,21 @@ namespace Presto.SWCamp.Lyrics
             var musicFilePath = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             lyricsParser.musicFilePath = musicFilePath;
             lyricsParser.parsingLyrics();
+            curLyricIndex = -1;
             //throw new NotImplementedException();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
-		{
-			textLyrics.Text = PrestoSDK.PrestoService.Player.Position.ToString();
+        {
+            if(curLyricIndex != -2)
+            {
+                if (lyricsParser.IsChangeLyric(curLyricIndex, PrestoSDK.PrestoService.Player.Position))
+                {
+                    curLyricIndex++;
+                    textLyrics.Text = lyricsParser.LyricsAt(curLyricIndex);
+                }
+            }      
         }
+        //PrestoSDK.PrestoService.Player.Position
     }
 }
