@@ -39,11 +39,13 @@ namespace Presto.SWCamp.Lyrics
         public int CloseLyricsIndex(double msTime)
         {
             int i = 0;
-            while(lyricsMsTimes[i + 1] < msTime)
+            while(lyricsMsTimes[i] < msTime)
             {
                 i++;
+                if (i == lyricsMsTimes.Count)
+                    break;
             }
-            return i--;
+            return i-1;
         }
 
         public bool IsChangeLyric(int index, double msTime)
