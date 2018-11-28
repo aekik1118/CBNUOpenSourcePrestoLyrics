@@ -28,7 +28,6 @@
         <TextBlock
             SnapsToDevicePixels="True"
             FontSize="24" x:Name="textLyrics"
-            Text="가사 준비중"
             TextAlignment="Center" FontFamily="Malgun Gothic" TextDecorations="{x:Null}" TextOptions.TextFormattingMode="Display" Foreground="White" TextOptions.TextHintingMode="Fixed" FontWeight="Bold" RenderTransformOrigin="0.1,0.5" >
             <TextBlock.Effect>
                 <DropShadowEffect ShadowDepth="2" Direction="270" BlurRadius="7"/>

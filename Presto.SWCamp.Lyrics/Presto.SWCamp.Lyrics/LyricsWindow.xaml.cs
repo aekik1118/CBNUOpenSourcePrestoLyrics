@@ -44,8 +44,8 @@ namespace Presto.SWCamp.Lyrics
         {        
             var musicFilePath = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             lyricsParser.musicFilePath = musicFilePath;
-            lyricsParser.parsingLyrics(); // 노래의 가사를 파싱
-            textLyrics.Text = "가사 준비중"; // 가사창 초기화
+            lyricsParser.parsingLyricsFile(); // 노래의 가사를 파싱
+            textLyrics.Text = ""; // 가사창 초기화
             choiceMusic = true;
             //throw new NotImplementedException();
             
@@ -60,12 +60,12 @@ namespace Presto.SWCamp.Lyrics
                 if (index >= 0)
                     textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));
                 else
-                    textLyrics.Text = "가사 준비중";
+                    textLyrics.Text = "간주 중";
             }
             else
             {
                 //음악이 선택되지 않았을때 디폴트 가사창
-                textLyrics.Text = "가사 준비중";
+                textLyrics.Text = "";
             }
         }
     }
