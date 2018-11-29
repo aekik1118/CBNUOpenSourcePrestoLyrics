@@ -28,6 +28,7 @@ namespace Presto.SWCamp.Lyrics
         {
             lyricFilePath = FindLyricFilePath();
             GetLyricsTimeAndLyricsFromFile();
+            lyricsCount = lyricsMsTimes.Count;
         }
 
         //입력된 msTime에 가장 가까운 가사 index값 반환
@@ -166,9 +167,6 @@ namespace Presto.SWCamp.Lyrics
                     break;
                 }
             }
-
-            
-
             //sizeOfLyricsMass를 이용하여 가사뭉텅이로 처리
             for (int i = 3 + sizeOfLyricsMass; i < lines.Length; i+= sizeOfLyricsMass)
             {
@@ -188,8 +186,6 @@ namespace Presto.SWCamp.Lyrics
                         return;
                     }
                    
-                      
-
                     if(j!= 0)
                     {
                         splitData = lines[i + j].Split(']');
@@ -211,8 +207,6 @@ namespace Presto.SWCamp.Lyrics
                 }
                 lyrics.Add(lyricsMass);
             }
-
-            lyricsCount = lyricsMsTimes.Count;
         }
 
     }

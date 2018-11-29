@@ -59,7 +59,7 @@ namespace Presto.SWCamp.Lyrics
             {
                 textBeforeLyrics.Text = " ";
                 textLyrics.Text = "간주 중";
-                textNextLyrics.Text = lyricsParser.LyricsAt(index + 1);
+                textNextLyrics.Text = lyricsParser.LyricsAt(index+1);
             }
             else if (index == 0)
             {
@@ -67,7 +67,7 @@ namespace Presto.SWCamp.Lyrics
                 textLyrics.Text = lyricsParser.LyricsAt(index);
                 textNextLyrics.Text = lyricsParser.LyricsAt(index + 1);
             }
-            else if (index == lyricsParser.GetLyricsCount() - 1)
+            else if (index == lyricsParser.GetLyricsCount()-1)
             {
                 textBeforeLyrics.Text = lyricsParser.LyricsAt(index - 1);
                 textLyrics.Text = lyricsParser.LyricsAt(index);
@@ -75,7 +75,7 @@ namespace Presto.SWCamp.Lyrics
             }
             else
             {
-                textBeforeLyrics.Text = lyricsParser.LyricsAt(index - 1);
+                textBeforeLyrics.Text = lyricsParser.LyricsAt(index-1);
                 textLyrics.Text = lyricsParser.LyricsAt(index);
                 textNextLyrics.Text = lyricsParser.LyricsAt(index + 1);
             }
