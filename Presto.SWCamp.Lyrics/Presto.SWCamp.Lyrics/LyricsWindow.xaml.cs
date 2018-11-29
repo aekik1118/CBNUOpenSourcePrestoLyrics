@@ -45,10 +45,42 @@ namespace Presto.SWCamp.Lyrics
             var musicFilePath = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             lyricsParser.musicFilePath = musicFilePath;
             lyricsParser.parsingLyricsFile(); // 노래의 가사를 파싱
+            
             textLyrics.Text = ""; // 가사창 초기화
+            textBeforeLyrics.Text = "";
+            textNextLyrics.Text = "";
             choiceMusic = true;
             //throw new NotImplementedException();
-            
+        }
+
+        private void printLyrics(int index)
+        {
+            if (index < 0)
+            {
+                textBeforeLyrics.Text = " ";
+                textLyrics.Text = "간주 중";
+                textNextLyrics.Text = lyricsParser.LyricsAt(index + 1);
+            }
+            else if (index == 0)
+            {
+                textBeforeLyrics.Text = " ";
+                textLyrics.Text = lyricsParser.LyricsAt(index);
+                textNextLyrics.Text = lyricsParser.LyricsAt(index + 1);
+            }
+            else if (index == lyricsParser.GetLyricsCount() - 1)
+            {
+                textBeforeLyrics.Text = lyricsParser.LyricsAt(index - 1);
+                textLyrics.Text = lyricsParser.LyricsAt(index);
+                textNextLyrics.Text = " ";
+            }
+            else
+            {
+                textBeforeLyrics.Text = lyricsParser.LyricsAt(index - 1);
+                textLyrics.Text = lyricsParser.LyricsAt(index);
+                textNextLyrics.Text = lyricsParser.LyricsAt(index + 1);
+            }
+
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -56,11 +88,8 @@ namespace Presto.SWCamp.Lyrics
             if(choiceMusic)
             {
                 int index = lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position);
+                printLyrics(index);
 
-                if (index >= 0)
-                    textLyrics.Text = lyricsParser.LyricsAt(lyricsParser.CloseLyricsIndex(PrestoSDK.PrestoService.Player.Position));
-                else
-                    textLyrics.Text = "간주 중";
             }
             else
             {

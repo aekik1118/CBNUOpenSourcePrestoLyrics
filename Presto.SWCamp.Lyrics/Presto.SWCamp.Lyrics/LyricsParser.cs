@@ -17,10 +17,12 @@ namespace Presto.SWCamp.Lyrics
         List<double> lyricsMsTimes = new List<double>(); // 가사의 시간 정보 리스트
         bool havingLyricPart = false;
         int sizeOfLyricsMass = 1;
+        int lyricsCount = 1; //가사 수
         public string musicFilePath { get; set; } // 음악 파일 경로
         public string lyricFilePath { get; set; } // 자막 파일 경로
 
-        int getSizeOfLyricsMass() { return sizeOfLyricsMass; }
+        public int GetSizeOfLyricsMass() { return sizeOfLyricsMass; }
+        public int GetLyricsCount() { return lyricsCount; }
 
         public void parsingLyricsFile()
         {
@@ -31,7 +33,7 @@ namespace Presto.SWCamp.Lyrics
         //입력된 msTime에 가장 가까운 가사 index값 반환
         public int CloseLyricsIndex(double msTime)
         {
-            int left = 0, right = lyricsMsTimes.Count-1;
+            int left = 0, right = lyricsCount - 1;
             int index = (left+right) / 2;
 
             if (msTime < lyricsMsTimes[0])//시작 가사 예외처리
@@ -94,6 +96,7 @@ namespace Presto.SWCamp.Lyrics
             lyricsMsTimes.Clear();
             havingLyricPart = false;
             sizeOfLyricsMass = 1;
+            lyricsCount = 1;
 
             //가서 첫줄에 시간정보와 가사정보를 파싱하여 맴버변수에 각각 저장
             var splitData = lines[3].Split(']');
@@ -155,9 +158,16 @@ namespace Presto.SWCamp.Lyrics
                         else
                             lyrics.Add(splitData[1]);
                     }
+                    if (sizeOfLyricsMass == 1) // 한줄가사일때의 예외처리
+                    {
+                        lyrics.RemoveAt(1);
+                        lyricsMsTimes.RemoveAt(1);
+                    }
                     break;
                 }
             }
+
+            
 
             //sizeOfLyricsMass를 이용하여 가사뭉텅이로 처리
             for (int i = 3 + sizeOfLyricsMass; i < lines.Length; i+= sizeOfLyricsMass)
@@ -180,24 +190,29 @@ namespace Presto.SWCamp.Lyrics
                    
                       
 
-                    if(j!= 0)                    
-                        splitData = lines[i+j].Split(']');
-                    
+                    if(j!= 0)
+                    {
+                        splitData = lines[i + j].Split(']');
+                        lyricsMass += "\n";
+                    }
+                                
                     if (splitData.Length > 2)//2이상인 경우 파트에 대한 정보가 저장되있다 가정
                     {
                         partOwner = splitData[1] + "] "; //파트 주인 정보 저장
-                        lyricsMass += "\n"+(partOwner + splitData[2]);
+                        lyricsMass += (partOwner + splitData[2]);
                     }
                     else
                     {
                         if (havingLyricPart)
-                            lyricsMass += "\n" + (partOwner + splitData[1]);            
+                            lyricsMass += (partOwner + splitData[1]);            
                         else
-                            lyricsMass += "\n" + (splitData[1]);                 
+                            lyricsMass += (splitData[1]);                 
                     }
                 }
                 lyrics.Add(lyricsMass);
             }
+
+            lyricsCount = lyricsMsTimes.Count;
         }
 
     }
